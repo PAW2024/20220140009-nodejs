@@ -32,13 +32,13 @@ app.use("/", authRoutes);
 
 app.get("/", isAuthenticated, (req, res) => {
   res.render("index", {
-    layout: "layouts/main-layouts",
+    layout: "layouts/main-layout",
   });
 });
 
 app.get("/contact", isAuthenticated, (req, res) => {
   res.render("contact", {
-    layout: "layouts/main-layouts",
+    layout: "layouts/main-layout",
   });
 });
 
@@ -46,7 +46,7 @@ app.get("/todo-view", isAuthenticated, (req, res) => {
   db.query("SELECT * FROM todos", (err, todos) => {
     if (err) return res.status(500).send("Internal Server Error");
     res.render("todo", {
-      layout: "layouts/main-layouts",
+      layout: "layouts/main-layout",
       todos: todos,
     });
   });
