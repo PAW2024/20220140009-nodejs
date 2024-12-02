@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const todoRoutes = require("./routes/tododb.js");
 require("dotenv").config();
@@ -15,6 +16,8 @@ app.use(express.json());
 
 app.use("/todos", todoRoutes);
 app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,7 +45,7 @@ app.get("/contact", isAuthenticated, (req, res) => {
   });
 });
 
-app.get("/todo-view", isAuthenticated, (req, res) => {
+app.get("/todo-view", (req, res) => {
   db.query("SELECT * FROM todos", (err, todos) => {
     if (err) return res.status(500).send("Internal Server Error");
     res.render("todo", {
